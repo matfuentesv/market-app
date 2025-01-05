@@ -1,25 +1,32 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
 import { routes } from './app.routes';
-import {IPublicClientApplication, PublicClientApplication} from '@azure/msal-browser';
-import {MSAL_INSTANCE, MsalService} from '@azure/msal-angular';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {AuthInterceptorInterceptor} from './core/interceptors/auth-interceptor.interceptor';
+import { provideClientHydration } from '@angular/platform-browser';
+import {IPublicClientApplication, PublicClientApplication} from "@azure/msal-browser";
+import {MSAL_INSTANCE, MsalService} from "@azure/msal-angular";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {AuthInterceptorInterceptor} from "./core/interceptors/auth-interceptor.interceptor";
 
 export function MSALFactory(): IPublicClientApplication {
-  return new PublicClientApplication({
+  const instance = new PublicClientApplication({
     auth: {
-      clientId: 'a8838fdd-dd11-410d-881a-5c216bc42362',
+      clientId: 'b29ae966-7adf-4ce5-bed8-9ba0e6062f50',
       redirectUri: 'http://localhost:4200'
     }
   });
+  instance.initialize();
+  return instance;
 }
+
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    {provide: MSAL_INSTANCE, useFactory: MSALFactory},
+    provideClientHydration(),
+    {
+      provide: MSAL_INSTANCE,
+      useFactory: MSALFactory
+    },
+    MsalService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorInterceptor, multi: true }
   ]
 };
