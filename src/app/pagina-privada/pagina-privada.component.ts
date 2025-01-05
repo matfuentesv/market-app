@@ -17,7 +17,7 @@ export class PaginaPrivadaComponent implements OnInit {
 
   responseBackend: object | undefined;
 
-  constructor(private authService: MsalService, private backendService: DefaultBackendService) { }
+  constructor(private authService: MsalService) { }
 
   ngOnInit(): void {
   }
@@ -31,9 +31,9 @@ export class PaginaPrivadaComponent implements OnInit {
   }
 
   llamarBackend(): void {
-    this.backendService.consumirBackend().subscribe(response => {
-      this.responseBackend = response;
-    });
+    // this.backendService.consumirBackend().subscribe(response => {
+    //   this.responseBackend = response;
+    // });
   }
 
   mostrarResponseBackend(): string {
