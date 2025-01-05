@@ -10,8 +10,9 @@ import {AuthInterceptorInterceptor} from "./core/interceptors/auth-interceptor.i
 export function MSALFactory(): IPublicClientApplication {
   const instance = new PublicClientApplication({
     auth: {
-      clientId: 'b29ae966-7adf-4ce5-bed8-9ba0e6062f50',
-      redirectUri: 'http://localhost:4200'
+      clientId: '89cf3309-ea83-4b1b-9cc4-bd2912b81458',
+      redirectUri: 'http://localhost:4200',
+      authority: 'https://login.microsoftonline.com/9bf0165c-dde5-43dd-a0cb-14f9aaac4672',
     }
   });
   instance.initialize();
